@@ -1,0 +1,6 @@
+framework module AXAIBeaconSDK {
+  umbrella header "AXAIBeaconSDK.h"
+
+  export *
+  module * { export * }
+}
