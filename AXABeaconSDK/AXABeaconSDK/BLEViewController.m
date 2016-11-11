@@ -51,6 +51,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
      self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
+    [self pressLeftBar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

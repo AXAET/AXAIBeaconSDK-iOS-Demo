@@ -31,6 +31,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.uuidTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.uuidTextField.delegate = self;
+    self.majorTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.majorTextField.delegate = self;
+    self.minorTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.minorTextField.delegate = self;
+    self.powerTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.powerTextField.delegate = self;
+    self.advInteralTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.advInteralTextField.delegate = self;
+    self.nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.nameTextField.delegate = self;
+    self.nameTextField.text = self.beaconModel.name;
+    self.pswTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(self.view.bounds) - 20, 40)];
+    self.pswTextField.delegate = self;
 
     [self.view addSubview:self.tableView];
 
@@ -118,18 +133,23 @@
     // you can get some data from the characteristic by our SDK API, note: not all beacons have these data
     if ([self.beaconDataManager getUUIDFromCharacteristic:characteristic]) {
         self.beaconModel.proximityUUID = [self.beaconDataManager getUUIDFromCharacteristic:characteristic];
+        self.uuidTextField.text = self.beaconModel.proximityUUID;
     }
     if ([self.beaconDataManager getMajorFromCharacteristic:characteristic]) {
         self.beaconModel.major = [self.beaconDataManager getMajorFromCharacteristic:characteristic];
+        self.majorTextField.text = self.beaconModel.major;
     }
     if ([self.beaconDataManager getMinorFromCharacteristic:characteristic]) {
         self.beaconModel.minor = [self.beaconDataManager getMinorFromCharacteristic:characteristic];
+        self.minorTextField.text =  self.beaconModel.minor;
     }
     if ([self.beaconDataManager getPowerFromCharacteristic:characteristic]) {
         self.beaconModel.power = [self.beaconDataManager getPowerFromCharacteristic:characteristic];
+        self.powerTextField.text = self.beaconModel.power;
     }
     if ([self.beaconDataManager getPeriodFromCharacteristic:characteristic]) {
         self.beaconModel.advInterval = [self.beaconDataManager getPeriodFromCharacteristic:characteristic];
+        self.advInteralTextField.text = self.beaconModel.advInterval;
     }
 
     // after you receive device password message, you can modify proximityUUID or major, minor, power, period... of the beacon. then reset device.
@@ -162,64 +182,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"DetailViewControllCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    } else {
-        while (cell.contentView.subviews.lastObject != nil) {
-            [cell.contentView.subviews.lastObject removeFromSuperview];
-        }
-    }
-
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(cell.contentView.frame) - 40, CGRectGetHeight(cell.contentView.frame))];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     switch (indexPath.section) {
         case 0:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.proximityUUID;
-            self.uuidTextField = textField;
-            self.uuidTextField.delegate = self;
+            [cell.contentView addSubview:self.uuidTextField];
 
             break;
         case 1:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.major;
-            self.majorTextField = textField;
-            self.majorTextField.delegate = self;
+            [cell.contentView addSubview:self.majorTextField];
 
             break;
         case 2:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.minor;
-            self.minorTextField = textField;
-            self.minorTextField.delegate = self;
+            [cell.contentView addSubview:self.minorTextField];
 
             break;
         case 3:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.power;
-            self.powerTextField = textField;
-            self.powerTextField.delegate = self;
+            [cell.contentView addSubview:self.powerTextField];
 
             break;
         case 4:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.advInterval;
-            self.advInteralTextField = textField;
-            self.advInteralTextField.delegate = self;
+            [cell.contentView addSubview:self.advInteralTextField];
 
             break;
         case 5:
-            [cell.contentView addSubview:textField];
-            textField.text = self.beaconModel.name;
-            self.nameTextField = textField;
-            self.nameTextField.delegate = self;
+            [cell.contentView addSubview:self.nameTextField];
 
             break;
         case 6:
-            [cell.contentView addSubview:textField];
-            self.pswTextField = textField;
-            self.pswTextField.delegate = self;
-
+            [cell.contentView addSubview:self.pswTextField];
+            
             break;
         case 7:
         {
